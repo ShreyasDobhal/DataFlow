@@ -59,6 +59,8 @@ public class CodeTextArea extends javax.swing.JPanel {
         return textArea.getText().toString();
     }
     
+    
+    
     public void setFont(int size) {
         textArea.setFont(new java.awt.Font("Segoe UI Semilight", 0, size));
     }

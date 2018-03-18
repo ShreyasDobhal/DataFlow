@@ -21,7 +21,7 @@ public class OvalEnd extends Shapes{
         super.height = height;
         super.width = width;
         super.text = "End";
-//        super.limitOfConnection = 1;
+        super.limitOfConnection = 0;
     }
     
     @Override

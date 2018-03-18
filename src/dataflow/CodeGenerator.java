@@ -153,6 +153,10 @@ public class CodeGenerator {
         //visited.add(start);
         stack.push(start);
         nestedLvl=0;
+        boolean ifBlock=false;
+        Shapes ifComponent=null;
+        int ifIndex=0;
+        
         while (!stack.isEmpty()) {
             Shapes block=stack.pop();
             
@@ -249,35 +253,60 @@ public class CodeGenerator {
                     }
                 }
                 
-                if (nestedLvl==0) {
+                if (nestedLvl==0 || stack.isEmpty()) {
                     break;
                 }
             }
             
             
             if (block.getClass().equals(rotatedSquare.class)) {
+                boolean skip=false;
                 // If Block
-                System.out.println("size of if block "+block.linkedShapes.size());
-                if (block.linkedShapes.size()==1) {
-                    // only yes available
-                    String text=block.text;
-                    code.add(cursor++,"if ( "+text+" ) { \n");
-                    code.add(cursor++,"} \n");
-                    cursor--;
-                    nestedLvl++;
-                    stack.push(block.linkedShapes.get(0));
-                    nestedBlocks.push("if");
+                //ifBlock=true;
+                if (ifComponent==null) {
+                    System.out.println("Initially null now its not");
+                    ifComponent=block;
+                    ifIndex=cursor;
                 }
-                else /*if (block.linkedShapes.size()==2)*/ {
-                    String text=block.text;
-                    code.add(cursor++,"if ( "+text+" ) { \n");
-                    code.add(cursor++,"} \n");
-                    cursor--;
-                    nestedLvl++;
-                    stack.push(block.linkedShapes.get(1));
-                    stack.push(block.linkedShapes.get(0));
-                    nestedBlocks.push("ifelse");
+                else {
+                    if (ifComponent.equals(block)) {
+                        String ifLoop = code.get(ifIndex);
+                        ifLoop=ifLoop.replace("if","while");
+                        code.remove(ifIndex);
+                        code.add(ifIndex,ifLoop);
+                        nestedLvl--;
+                        cursor++;
+                        nestedBlocks.pop();
+                        skip=true;
+                        //stack.push(block.linkedShapes.get(1));
+                    }
                 }
+                
+                if (!skip) {
+                    //System.out.println("size of if block "+block.linkedShapes.size());
+                    if (block.linkedShapes.size()==1) {
+                        // only yes available
+                        String text=block.text;
+                        code.add(cursor++,"if ( "+text+" ) { \n");
+                        code.add(cursor++,"} \n");
+                        cursor--;
+                        nestedLvl++;
+                        stack.push(block.linkedShapes.get(0));
+                        nestedBlocks.push("if");
+                    }
+                    else /*if (block.linkedShapes.size()==2)*/ {
+                        String text=block.text;
+                        code.add(cursor++,"if ( "+text+" ) { \n");
+                        code.add(cursor++,"} \n");
+                        cursor--;
+                        nestedLvl++;
+                        stack.push(block.linkedShapes.get(1));
+                        stack.push(block.linkedShapes.get(0));
+                        nestedBlocks.push("ifelse");
+                    }
+                }
+                
+                
             }
             else if (!block.getClass().equals(OvalEnd.class)){
                 for (Shapes neighbor:block.linkedShapes) {

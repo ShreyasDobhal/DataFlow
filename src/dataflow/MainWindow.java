@@ -7,7 +7,9 @@ package dataflow;
 
 import Beans.CanvasPanel;
 import Beans.NewTab;
+import Beans.TextPopup;
 import Canvas.Shapes;
+import java.awt.Frame;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,6 +26,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -36,6 +39,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     public MainWindow() {
+        this.setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH);
         initComponents();
         tabs=new ArrayList<>();
         tabs.add(newTab1);
@@ -60,6 +64,22 @@ public class MainWindow extends javax.swing.JFrame {
         toolBar1 = new Beans.ToolBar();
         jPanel4 = new javax.swing.JPanel();
         progressBar = new javax.swing.JProgressBar();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        btnMoveCom = new javax.swing.JLabel();
+        btnAddEdge = new javax.swing.JLabel();
+        btnAddCom = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        btnSelectCom = new javax.swing.JLabel();
+        btnDeleteCom = new javax.swing.JLabel();
+        btnDeleteLine = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        btnPlay = new javax.swing.JLabel();
+        btnNext = new javax.swing.JLabel();
+        btnStop = new javax.swing.JLabel();
+        txtDebugInput = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDebugOutput = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         fileTabPane = new javax.swing.JTabbedPane();
         newTab1 = new Beans.NewTab();
@@ -74,9 +94,8 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         incFontSize = new javax.swing.JMenuItem();
         decFontSize = new javax.swing.JMenuItem();
+        itemComment = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        itemDrawLine = new javax.swing.JMenuItem();
-        itemDragObj = new javax.swing.JMenuItem();
         radioItemSelect = new javax.swing.JRadioButtonMenuItem();
         radioItemMove = new javax.swing.JRadioButtonMenuItem();
         radioItemJoin = new javax.swing.JRadioButtonMenuItem();
@@ -84,6 +103,7 @@ public class MainWindow extends javax.swing.JFrame {
         radioItemDelete = new javax.swing.JRadioButtonMenuItem();
         radioItemDeleteLine = new javax.swing.JRadioButtonMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         itemGenCode = new javax.swing.JMenuItem();
         itemAutoForm = new javax.swing.JMenuItem();
@@ -101,6 +121,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(300, 514));
 
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane2.setEnabled(false);
 
         jPanel3.setMinimumSize(new java.awt.Dimension(100, 500));
         jPanel3.setPreferredSize(new java.awt.Dimension(298, 300));
@@ -129,18 +150,179 @@ public class MainWindow extends javax.swing.JFrame {
 
         jSplitPane2.setTopComponent(jPanel3);
 
-        jPanel4.setMinimumSize(new java.awt.Dimension(100, 300));
+        jPanel4.setMinimumSize(new java.awt.Dimension(100, 0));
         jPanel4.setPreferredSize(new java.awt.Dimension(298, 200));
 
         progressBar.setForeground(new java.awt.Color(51, 255, 51));
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+
+        btnMoveCom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move.png"))); // NOI18N
+        btnMoveCom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMoveComMouseClicked(evt);
+            }
+        });
+
+        btnAddEdge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/line.png"))); // NOI18N
+        btnAddEdge.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddEdgeMouseClicked(evt);
+            }
+        });
+
+        btnAddCom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add.png"))); // NOI18N
+        btnAddCom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddComMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(btnAddCom)
+                .addGap(37, 37, 37)
+                .addComponent(btnMoveCom)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAddEdge)
+                .addGap(25, 25, 25))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnMoveCom, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+            .addComponent(btnAddEdge, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnAddCom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        btnSelectCom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cursor.png"))); // NOI18N
+        btnSelectCom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelectComMouseClicked(evt);
+            }
+        });
+
+        btnDeleteCom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/delete.png"))); // NOI18N
+        btnDeleteCom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteComMouseClicked(evt);
+            }
+        });
+
+        btnDeleteLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/line.png"))); // NOI18N
+        btnDeleteLine.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteLineMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(btnDeleteCom)
+                .addGap(40, 40, 40)
+                .addComponent(btnSelectCom)
+                .addGap(33, 33, 33)
+                .addComponent(btnDeleteLine)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnSelectCom, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+            .addComponent(btnDeleteCom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDeleteLine, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/play.png"))); // NOI18N
+        btnPlay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPlayMouseClicked(evt);
+            }
+        });
+
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/next.png"))); // NOI18N
+        btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNextMouseClicked(evt);
+            }
+        });
+
+        btnStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/stoped.png"))); // NOI18N
+        btnStop.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStopMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnPlay)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNext)
+                .addGap(52, 52, 52)
+                .addComponent(btnStop)
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+            .addComponent(btnPlay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        txtDebugOutput.setColumns(20);
+        txtDebugOutput.setRows(5);
+        jScrollPane1.setViewportView(txtDebugOutput);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDebugInput, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDebugInput, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(109, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(progressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -148,7 +330,9 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel4);
@@ -157,11 +341,11 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jSplitPane1.setRightComponent(jPanel1);
@@ -175,7 +359,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(fileTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(fileTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,28 +440,19 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jMenu2.add(decFontSize);
 
+        itemComment.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        itemComment.setText("Insert Comments");
+        itemComment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCommentActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itemComment);
+
         jMenuBar1.add(jMenu2);
 
         jMenu4.setText("Tools");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        itemDrawLine.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
-        itemDrawLine.setText("Draw Line");
-        itemDrawLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemDrawLineActionPerformed(evt);
-            }
-        });
-        jMenu4.add(itemDrawLine);
-
-        itemDragObj.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
-        itemDragObj.setText("Drag Object");
-        itemDragObj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemDragObjActionPerformed(evt);
-            }
-        });
-        jMenu4.add(itemDragObj);
 
         radioItemSelect.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         radioItemSelect.setSelected(true);
@@ -325,6 +500,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jMenu4.add(radioItemDelete);
 
+        radioItemDeleteLine.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         radioItemDeleteLine.setText("Delete Connections");
         radioItemDeleteLine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,12 +513,22 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenu3.setText("Help");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
         jMenuBar1.add(jMenu3);
 
         jMenu5.setText("Source");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         itemGenCode.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        itemGenCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/selectAll.png"))); // NOI18N
         itemGenCode.setText("Generate Code");
         itemGenCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -352,6 +538,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu5.add(itemGenCode);
 
         itemAutoForm.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        itemAutoForm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/autoBrac.png"))); // NOI18N
         itemAutoForm.setText("Auto Format");
         itemAutoForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -361,10 +548,12 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu5.add(itemAutoForm);
 
         itemCodeSave.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        itemCodeSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png"))); // NOI18N
         itemCodeSave.setText("Save");
         jMenu5.add(itemCodeSave);
 
         itemCompile.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        itemCompile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/compile.png"))); // NOI18N
         itemCompile.setText("Compile");
         itemCompile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,6 +563,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu5.add(itemCompile);
 
         itemRun.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        itemRun.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/run.png"))); // NOI18N
         itemRun.setText("Run");
         itemRun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -382,6 +572,8 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jMenu5.add(itemRun);
 
+        itemStop.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        itemStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/stop.png"))); // NOI18N
         itemStop.setText("Stop");
         itemStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -425,16 +617,6 @@ public class MainWindow extends javax.swing.JFrame {
         tabs.add(tab);
         setCodeFont();
     }//GEN-LAST:event_itemNewActionPerformed
-
-    private void itemDrawLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDrawLineActionPerformed
-        dragState=false;
-        CanvasPanel.changeState(dragState);
-    }//GEN-LAST:event_itemDrawLineActionPerformed
-
-    private void itemDragObjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDragObjActionPerformed
-        dragState=true;
-        CanvasPanel.changeState(dragState);
-    }//GEN-LAST:event_itemDragObjActionPerformed
 
     private void radioItemSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioItemSelectActionPerformed
         deSelectAll();
@@ -590,6 +772,82 @@ public class MainWindow extends javax.swing.JFrame {
         codeComp.terminateProcess=true;
     }//GEN-LAST:event_itemStopActionPerformed
 
+    private void btnPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlayMouseClicked
+        Debugger debug=new Debugger(this);
+        int curTabIndex=fileTabPane.getSelectedIndex();
+        NewTab curTab = tabs.get(curTabIndex);
+        Shapes start = curTab.canvasPanel1.startNode;
+        debug.startDebugger(start);
+    }//GEN-LAST:event_btnPlayMouseClicked
+
+    private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
+        
+    }//GEN-LAST:event_btnNextMouseClicked
+
+    private void btnStopMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStopMouseClicked
+        
+    }//GEN-LAST:event_btnStopMouseClicked
+
+    private void btnAddComMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddComMouseClicked
+        deSelectAll();
+        radioItemAdd.setSelected(true);
+        setState(true,false);
+    }//GEN-LAST:event_btnAddComMouseClicked
+
+    private void btnMoveComMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoveComMouseClicked
+        deSelectAll();
+        radioItemMove.setSelected(true);
+        setState(true,false);
+    }//GEN-LAST:event_btnMoveComMouseClicked
+
+    private void btnAddEdgeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddEdgeMouseClicked
+        deSelectAll();
+        radioItemJoin.setSelected(true);
+        setState(false,false);
+    }//GEN-LAST:event_btnAddEdgeMouseClicked
+
+    private void btnDeleteComMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteComMouseClicked
+        deSelectAll();
+        radioItemDelete.setSelected(true);
+        setState(true,true);
+    }//GEN-LAST:event_btnDeleteComMouseClicked
+
+    private void btnSelectComMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelectComMouseClicked
+        deSelectAll();
+        radioItemSelect.setSelected(true);
+        setState(true,false);
+    }//GEN-LAST:event_btnSelectComMouseClicked
+
+    private void btnDeleteLineMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteLineMouseClicked
+        setState(false,true);
+    }//GEN-LAST:event_btnDeleteLineMouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ArrayList<String> input=new ArrayList<>();
+        input.add("class Hello {");
+        input.add("public static void main(String args[]) {");
+        input.add("System.out.println(hey);");
+        input.add("}");
+        input.add("}");
+        int curTabIndex=fileTabPane.getSelectedIndex();
+        NewTab curTab = tabs.get(curTabIndex);
+        for (String s:input) {
+            curTab.codeTextArea1.setText(s);
+        }
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void itemCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCommentActionPerformed
+        int curTabIndex=fileTabPane.getSelectedIndex();
+        NewTab curTab = tabs.get(curTabIndex);
+        CanvasPanel panel=curTab.canvasPanel1;
+        TextPopup commentPopup = new TextPopup(panel,this,true);
+        commentPopup.setLocation(getWidth()/2, getHeight()/2);
+        commentPopup.setVisible(true);
+    }//GEN-LAST:event_itemCommentActionPerformed
+
+    
+    
     public void takeSnapShot() {
        int curTabIndex=fileTabPane.getSelectedIndex();
        NewTab curTab = tabs.get(curTabIndex);
@@ -706,6 +964,7 @@ public class MainWindow extends javax.swing.JFrame {
             public void run() {
                 MainWindow mwin = new MainWindow();
                 mwin.setVisible(true);
+                mwin.setExtendedState(mwin.getExtendedState()|JFrame.MAXIMIZED_BOTH);
                 MainFrame = mwin;
             }
         });
@@ -723,15 +982,23 @@ public class MainWindow extends javax.swing.JFrame {
     private CodeCompiler codeComp;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnAddCom;
+    private javax.swing.JLabel btnAddEdge;
+    private javax.swing.JLabel btnDeleteCom;
+    private javax.swing.JLabel btnDeleteLine;
+    private javax.swing.JLabel btnMoveCom;
+    private javax.swing.JLabel btnNext;
+    private javax.swing.JLabel btnPlay;
+    private javax.swing.JLabel btnSelectCom;
+    private javax.swing.JLabel btnStop;
     private javax.swing.JMenuItem decFontSize;
     public javax.swing.JTabbedPane fileTabPane;
     private javax.swing.JMenuItem incFontSize;
     private javax.swing.JMenuItem itemAutoForm;
     private javax.swing.JMenuItem itemClose;
     private javax.swing.JMenuItem itemCodeSave;
+    private javax.swing.JMenuItem itemComment;
     private javax.swing.JMenuItem itemCompile;
-    private javax.swing.JMenuItem itemDragObj;
-    private javax.swing.JMenuItem itemDrawLine;
     private javax.swing.JMenuItem itemExportCode;
     private javax.swing.JMenuItem itemGenCode;
     private javax.swing.JMenuItem itemNew;
@@ -746,10 +1013,16 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private Beans.NewTab newTab1;
@@ -761,5 +1034,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem radioItemMove;
     private javax.swing.JRadioButtonMenuItem radioItemSelect;
     private Beans.ToolBar toolBar1;
+    public javax.swing.JTextField txtDebugInput;
+    public javax.swing.JTextArea txtDebugOutput;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,6 +18,7 @@ public class Parallelogram extends Shapes{
         super.y = y;
         super.height = height;
         super.width = width;
+        super.limitOfConnection = 1;
     }
     
     @Override

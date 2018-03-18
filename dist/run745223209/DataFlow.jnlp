@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="DataFlow.jnlp">
+  <information>
+    <title>DataFlow</title>
+    <vendor>Shreyas</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="DataFlow.jar" size="193863" download="eager" />
+    <jar href="lib\rsyntaxtextarea.jar" size="921777" download="eager" />
+    <jar href="lib\sqlite-jdbc-3.21.0.jar" size="6672489" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="DataFlow" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="dataflow.DataFlow"  name="DataFlow" />
+  <update check="always"/>
+</jnlp>

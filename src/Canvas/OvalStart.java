@@ -21,7 +21,7 @@ public class OvalStart extends Shapes{
         super.height = height;
         super.width = width;
         super.text = "Start";
-//        super.limitOfConnection = 1;
+        super.limitOfConnection = 1;
     }
     
     @Override

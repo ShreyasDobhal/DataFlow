@@ -65,4 +65,18 @@ public class Line {
         g2.setStroke(new BasicStroke(5));
         g2.drawLine(this.endShapes[0].getCenterX(), this.endShapes[0].getCenterY(), this.endShapes[1].getCenterX(), this.endShapes[1].getCenterY());
     }
+    
+    public Shapes getTheOtherEnd(Shapes shape){
+        if(this.endShapes.length == 2){
+            if(endShapes[0].equals(shape)){
+                return endShapes[1];
+            }else if(endShapes[1].equals(shape)){
+                return endShapes[0];
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
 }
